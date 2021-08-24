@@ -1,0 +1,44 @@
+GreenBeretDS revision history
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+V0.6.1 - 2021-07-06 (FluBBa)
+	Fixed reset for "Mr. Goemon".
+
+V0.6.0 - 2021-03-23 (FluBBa)
+	Added load/save state.
+
+V0.5.6 - 2020-06-08 (FluBBa)
+	Added support for flipped sprites.
+
+V0.5.5 - 2018-07-13 (FluBBa)
+	Fixed sound tempo.
+
+V0.5.1 - 2018-05-01 (FluBBa)
+	Added flipped background support.
+
+V0.5.0 - 2018-04-20 (FluBBa)
+	Lots of fixes.
+
+V0.4.1 - 2016-08-02 (FluBBa)
+   Updated Z80 and more.
+
+V0.4.0 - 2009-07-12 (FluBBa)
+	Fixed some more with zip handling.
+
+V0.3.0 - 2009-05-23 (FluBBa)
+   Fixed parsing of some zip files.
+
+V0.2.0 - 2009-05-13 (FluBBa)
+   Added GUI including touch support.
+   Added support for "Rush n' Attack" & "Mr. Goemon".
+   Added support for (compressed) zip files.
+   Added savestates.
+   Added option for unscaled screen.
+   Added optional powersave for 2nd screen.
+   Added gamma correction.
+   Fixed scaling.
+
+V0.1.0 - 2009-04-30 (FluBBa)
+   Initial release, plays Green Beret with sound.
+

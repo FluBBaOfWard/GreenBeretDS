@@ -1,0 +1,21 @@
+GreenBeretDS To do
+------------------
+
+
+
+Misc:
+	Pad left and right to switch Tabs in GUI?
+	Show Coin counter?
+
+Graphic:
+
+CPU:
+	Timing?
+
+GUI:
+
+Sound:
+	Update more often?
+
+Games:
+
