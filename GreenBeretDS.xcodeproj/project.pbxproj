@@ -74,11 +74,13 @@
 		9C3548CA24BDBD6600CCD030 /* FileHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileHandling.h; sourceTree = "<group>"; };
 		9C7BB93925F3E2B300EA9C9C /* GreenBeret.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GreenBeret.c; sourceTree = "<group>"; };
 		9C7BB93A25F3E2B300EA9C9C /* GreenBeret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreenBeret.h; sourceTree = "<group>"; };
-		9C99549326341B3100CE2B94 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		9CC0F93626D6B0160035478F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9CC0F93726D6B0240035478F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9CC0F93826D6B0300035478F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9CC0F93926D6B0C10035478F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A42D026D205FEDD800515C72 /* gberetVideo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gberetVideo.cpp; sourceTree = "<group>"; };
 		A42D026E205FEDD800515C72 /* gberet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gberet.cpp; sourceTree = "<group>"; };
 		A4AA02141B04077F0043E4D4 /* History.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = History.txt; sourceTree = "<group>"; };
-		A4AA02151B05DCEB0043E4D4 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		A4DA29B117651A3800810B12 /* GreenBeretDS_todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GreenBeretDS_todo.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,8 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				A4DA29B117651A3800810B12 /* GreenBeretDS_todo.txt */,
+				9CC0F93626D6B0160035478F /* README.md */,
 				A4AA02141B04077F0043E4D4 /* History.txt */,
-				A4AA02151B05DCEB0043E4D4 /* readme.txt */,
 				A42D026C205FEDD800515C72 /* Docs */,
 				746D78E014ED9A6D00CC738F /* makefile */,
 				9C3548B824BCB32800CCD030 /* include */,
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				9C35486F24BCAB4300CCD030 /* K005849_todo.txt */,
+				9CC0F93826D6B0300035478F /* README.md */,
 				9C35487424BCAB4300CCD030 /* History.txt */,
 				9C35487024BCAB4300CCD030 /* Version.h */,
 				9C35487224BCAB4300CCD030 /* K005849.h */,
@@ -172,6 +175,7 @@
 		9C35487A24BCAB4300CCD030 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				9CC0F93926D6B0C10035478F /* README.md */,
 				9C294953260F4CD900EDA7C9 /* graphics */,
 				9C35487D24BCAB4300CCD030 /* unzip */,
 				9C35488224BCAB4300CCD030 /* nds_asm.h */,
@@ -204,7 +208,7 @@
 		9C35489D24BCAB4300CCD030 /* ARMZ80 */ = {
 			isa = PBXGroup;
 			children = (
-				9C99549326341B3100CE2B94 /* ReadMe.txt */,
+				9CC0F93726D6B0240035478F /* README.md */,
 				9C3548A124BCAB4300CCD030 /* ARMZ80_todo.txt */,
 				9C3548A024BCAB4300CCD030 /* History.txt */,
 				9C35489E24BCAB4300CCD030 /* Version.h */,

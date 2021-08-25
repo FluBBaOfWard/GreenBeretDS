@@ -4,3 +4,4 @@ arm9/build
 *.nds
 *.xcuserstate
 *.xcworkspacedata
+*.zip
