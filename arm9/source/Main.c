@@ -2,6 +2,7 @@
 
 #include "Main.h"
 #include "Shared/EmuMenu.h"
+#include "Shared/FileHelper.h"
 #include "Shared/AsmExtra.h"
 #include "Gui.h"
 #include "FileHandling.h"
@@ -14,10 +15,6 @@
 static void checkTimeOut(void);
 static void setupGraphics(void);
 
-bool enableExit = false;
-bool pauseEmulation = false;
-int selectedGame = 0;
-int sleepTime = 60*60*5;			// 5 min
 static int sleepTimer = 60*60*5;	// 5 min
 static bool vBlankOverflow = false;
 

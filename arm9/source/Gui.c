@@ -2,8 +2,9 @@
 
 #include "Gui.h"
 #include "Shared/EmuMenu.h"
-#include "Shared/AsmExtra.h"
 #include "Shared/EmuSettings.h"
+#include "Shared/FileHelper.h"
+#include "Shared/AsmExtra.h"
 #include "Main.h"
 #include "FileHandling.h"
 #include "Cart.h"
@@ -13,7 +14,7 @@
 #include "K005849/Version.h"
 #include "../arm7/source/SN76496/Version.h"
 
-#define EMUVERSION "V0.6.1 2021-07-06"
+#define EMUVERSION "V0.6.1 2021-09-12"
 
 const fptr fnMain[] = {nullUI, subUI, subUI, subUI, subUI, subUI, subUI, subUI, subUI, subUI};
 
@@ -32,7 +33,6 @@ const u8 menuXitems[] = {ARRSIZE(fnList0), ARRSIZE(fnList1), ARRSIZE(fnList2), A
 const fptr drawuiX[] = {uiNullNormal, uiFile, uiOptions, uiAbout, uiController, uiDisplay, uiSettings, uiDipswitches, uiLoadGame, uiDummy};
 const u8 menuXback[] = {0,0,0,0,2,2,2,2,1,8};
 
-int emuSettings = AUTOPAUSE_EMULATION;
 u8 g_gammaValue = 0;
 
 char *const autoTxt[] = {"Off","On","With R"};
@@ -56,6 +56,7 @@ char *const singleTxt[] = {"Single","Dual"};
 
 
 void setupGUI() {
+	emuSettings = AUTOPAUSE_EMULATION;
 	keysSetRepeat(25, 4);	// delay, repeat.
 	openMenu();
 }
@@ -71,7 +72,7 @@ void exitGUI() {
 void quickSelectGame(void) {
 	while (loadGame(selected)) {
 		setSelectedMenu(9);
-		if (!browseForFileType(FILEEXTENSIONS".zip")) {
+		if (!browseForFileType(FILEEXTENSIONS)) {
 			backOutOfMenu();
 			return;
 		}
