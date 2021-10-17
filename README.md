@@ -1,4 +1,4 @@
-# GreenBeretDS V0.6.1
+# GreenBeretDS V0.6.2
 --------------------------------------------------------------------------------
 This is a Green Beret, Rush'n Attack & Mr. Goemon - Arcade emulator for the NDS.
 It has bugs in the sprite rendering and no tile priority support.
@@ -7,7 +7,7 @@ You should still be able to enjoy the game though. =)
 --------------------------------------------------------------------------------
 How to use:
 --------------------------------------------------------------------------------
-First DLDI patch the emulator for your flashcard.
+Depending on your flashcart you might have to DLDI patch the emulator.
 Create a folder named "acds" in either the root of your flash card or in the
 data folder. Now put gberet.zip, rushatck.zip and/or mrgoemon.zip into a folder
 where you have arcade roms.

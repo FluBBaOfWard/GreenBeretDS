@@ -11,7 +11,7 @@ void waitVBlank(void);
 
 /**
  * Waits the specified number of frames before returning.
- * @param  count: Number of frames to wait.
+ * @param count: Number of frames to wait.
  * @deprecated Don't use, solve it some other way.
  */
 void pausVBlank(int count);

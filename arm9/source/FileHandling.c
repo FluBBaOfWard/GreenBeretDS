@@ -52,7 +52,7 @@ int loadSettings() {
 	g_gammaValue = cfg.gammaValue;
 	emuSettings  = cfg.emuSettings & ~EMUSPEED_MASK;	// Clear speed setting.
 	sleepTime    = cfg.sleepTime;
-	joyCfg       = (joyCfg&~0x400)|((cfg.controller&1)<<10);
+	joyCfg       = (joyCfg & ~0x400)|((cfg.controller&1)<<10);
 	strlcpy(currentDir, cfg.currentPath, sizeof(currentDir));
 	g_dipSwitch0 = cfg.dipSwitchGB0;
 	g_dipSwitch1 = cfg.dipSwitchGB1;
