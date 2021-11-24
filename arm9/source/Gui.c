@@ -13,7 +13,7 @@
 #include "K005849/Version.h"
 #include "../arm7/source/SN76496/Version.h"
 
-#define EMUVERSION "V0.6.2 2021-10-17"
+#define EMUVERSION "V0.6.2 2021-11-24"
 
 const fptr fnMain[] = {nullUI, subUI, subUI, subUI, subUI, subUI, subUI, subUI, subUI, subUI};
 
