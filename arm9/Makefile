@@ -18,7 +18,7 @@ include $(DEVKITARM)/ds_rules
 BUILD		:=	build
 SOURCES		:=	source	\
 				source/Shared \
-				source/Shared/unzip \
+				source/Shared/Unzip \
 				source/ARMZ80 \
 				source/K005849
 INCLUDES	:=	include ../include
