@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <sys/dir.h>
 
-#include "Filehandling.h"
+#include "FileHandling.h"
 #include "Shared/EmuMenu.h"
 #include "Shared/EmuSettings.h"
 #include "Shared/FileHelper.h"
