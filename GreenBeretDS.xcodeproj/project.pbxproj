@@ -56,7 +56,6 @@
 		9C3548B624BCAB4300CCD030 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		9C3548B724BCAB4300CCD030 /* History.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = History.txt; sourceTree = "<group>"; };
 		9C3548B924BCB32800CCD030 /* c_defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = c_defs.h; sourceTree = "<group>"; };
-		9C3548BB24BDBC8800CCD030 /* Equates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Equates.h; sourceTree = "<group>"; };
 		9C3548BC24BDBC9800CCD030 /* Main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Main.h; sourceTree = "<group>"; };
 		9C3548BD24BDBC9800CCD030 /* Main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Main.c; sourceTree = "<group>"; };
 		9C3548BE24BDBCA900CCD030 /* Gui.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Gui.c; sourceTree = "<group>"; };
@@ -134,11 +133,12 @@
 				9C35489D24BCAB4300CCD030 /* ARMZ80 */,
 				9C35486E24BCAB4300CCD030 /* K005849 */,
 				9C35487A24BCAB4300CCD030 /* Shared */,
-				9C3548BB24BDBC8800CCD030 /* Equates.h */,
 				9C3548BC24BDBC9800CCD030 /* Main.h */,
 				9C3548BD24BDBC9800CCD030 /* Main.c */,
 				9C3548BF24BDBCA900CCD030 /* Gui.h */,
 				9C3548BE24BDBCA900CCD030 /* Gui.c */,
+				9C3548CA24BDBD6600CCD030 /* FileHandling.h */,
+				9C3548C924BDBD6600CCD030 /* FileHandling.c */,
 				9C7BB93A25F3E2B300EA9C9C /* GreenBeret.h */,
 				9C7BB93925F3E2B300EA9C9C /* GreenBeret.c */,
 				9C3548C124BDBCF700CCD030 /* Cart.h */,
@@ -152,8 +152,6 @@
 				9C3548C724BDBD4A00CCD030 /* Gfx.h */,
 				9C3548C624BDBD4A00CCD030 /* Gfx.s */,
 				9C3548C824BDBD5800CCD030 /* Memory.s */,
-				9C3548CA24BDBD6600CCD030 /* FileHandling.h */,
-				9C3548C924BDBD6600CCD030 /* FileHandling.c */,
 			);
 			path = source;
 			sourceTree = "<group>";

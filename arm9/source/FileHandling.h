@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include "GreenBeret.h"
+
 #define FILEEXTENSIONS ".zip"
 
 extern int selectedGame;

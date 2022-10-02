@@ -2,7 +2,7 @@ GreenBeretDS revision history
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
-V0.6.2 - 2022-08-23 (FluBBa)
+V0.6.2 - 2022-10-02 (FluBBa)
 	Cleaned up source.
 
 V0.6.1 - 2021-07-06 (FluBBa)

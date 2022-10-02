@@ -80,7 +80,7 @@ static const ArcadeRom gberetbRoms[10] = {
 	{"577h10.5f",  0x0100, 0xe9de1e53},
 	{"577h11.6f",  0x0100, 0x2a1a992b},
 	// ROM_REGION( 0x0001, "plds", 0 )
-	//{"ic35.5h.bin",0x0001, NO_DUMP ) /* PAL16R6ACN */
+	//{"ic35.5h.bin",0x0001, NO_DUMP ) // PAL16R6ACN
 };
 
 static const ArcadeRom mrgoemonRoms[8] = {
@@ -97,9 +97,9 @@ static const ArcadeRom mrgoemonRoms[8] = {
 	{"621a08.7f",  0x0100, 0x2fb244dd},
 };
 
-const ArcadeGame games[GAME_COUNT] = {
-	{"gberet", "Green Beret", 11, gberetRoms},
-	{"rushatck", "Rush'n Attack (US)", 11, rushatckRoms},
-	{"gberetb", "Green Beret (bootleg)", 10, gberetbRoms},
-	{"mrgoemon", "Mr. Goemon (Japan)", 8, mrgoemonRoms},
+const ArcadeGame gberetGames[GAME_COUNT] = {
+	AC_GAME("gberet", "Green Beret", gberetRoms)
+	AC_GAME("rushatck", "Rush'n Attack (US)", rushatckRoms)
+	AC_GAME("gberetb", "Green Beret (bootleg)", gberetbRoms)
+	AC_GAME("mrgoemon", "Mr. Goemon (Japan)", mrgoemonRoms)
 };

@@ -4,21 +4,27 @@
 #include "ARMZ80/ARMZ80mac.h"
 #include "K005849/K005849.i"
 
-	.global cpuReset
+#define CYCLE_PSL (198)
+
 	.global run
+	.global stepFrame
+	.global cpuReset
 	.global frameTotal
 	.global waitMaskIn
 	.global waitMaskOut
 
 
-
 	.syntax unified
 	.arm
 
-	.section .text
+#if GBA
+	.section .ewram, "ax", %progbits	;@ For the GBA
+#else
+	.section .text						;@ For anything else
+#endif
 	.align 2
 ;@----------------------------------------------------------------------------
-run:		;@ Return after 1 frame
+run:		;@ Return after X frames
 	.type   run STT_FUNC
 ;@----------------------------------------------------------------------------
 	ldrh r0,waitCountIn
@@ -54,11 +60,13 @@ runStart:
 ;@----------------------------------------------------------------------------
 konamiFrameLoop:
 ;@----------------------------------------------------------------------------
+//	ldr r0,cyclesPerScanline
+	mov r0,#CYCLE_PSL
+	bl Z80RunXCycles
 	ldr koptr,=k005849_0
 	bl doScanline
 	cmp r0,#0
-	ldrne r0,cyclesPerScanline
-	bne Z80RunXCycles
+	bne konamiFrameLoop
 ;@----------------------------------------------------------------------------
 
 	add r0,z80optbl,#z80Regs
@@ -83,19 +91,48 @@ konamiFrameLoop:
 
 ;@----------------------------------------------------------------------------
 cyclesPerScanline:	.long 0
-frameTotal:			.long 0		;@ Let ui.c see frame count for savestates
+frameTotal:			.long 0		;@ Let Gui.c see frame count for savestates
 waitCountIn:		.byte 0
 waitMaskIn:			.byte 0
 waitCountOut:		.byte 0
 waitMaskOut:		.byte 0
 
 ;@----------------------------------------------------------------------------
+stepFrame:					;@ Return after 1 frame
+	.type stepFrame STT_FUNC
+;@----------------------------------------------------------------------------
+	stmfd sp!,{r4-r11,lr}
+
+	ldr z80optbl,=Z80OpTable
+	add r0,z80optbl,#z80Regs
+	ldmia r0,{z80f-z80pc,z80sp}	;@ Restore Z80 state
+;@----------------------------------------------------------------------------
+konamiStepLoop:
+;@----------------------------------------------------------------------------
+//	ldr r0,cyclesPerScanline
+	mov r0,#CYCLE_PSL
+	bl Z80RunXCycles
+	ldr koptr,=k005849_0
+	bl doScanline
+	cmp r0,#0
+	bne konamiStepLoop
+;@----------------------------------------------------------------------------
+	add r0,z80optbl,#z80Regs
+	stmia r0,{z80f-z80pc,z80sp}	;@ Save Z80 state
+
+	ldr r1,frameTotal
+	add r1,r1,#1
+	str r1,frameTotal
+
+	ldmfd sp!,{r4-r11,lr}
+	bx lr
+;@----------------------------------------------------------------------------
 cpuReset:		;@ Called by loadCart/resetGame
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{lr}
 
 ;@---Speed - 3.072MHz / 60Hz		;Green Beret, Goemon.
-	ldr r0,=198
+	ldr r0,=CYCLE_PSL
 	str r0,cyclesPerScanline
 
 ;@--------------------------------------
@@ -104,11 +141,8 @@ cpuReset:		;@ Called by loadCart/resetGame
 	adr r4,cpuMapData
 	bl mapZ80Memory
 
-	adr r0,konamiFrameLoop
-	str r0,[z80optbl,#z80NextTimeout]
-	str r0,[z80optbl,#z80NextTimeout_]
-
-	mov r0,#0
+	mov r0,z80optbl
+	mov r1,#0
 	bl Z80Reset
 	ldmfd sp!,{lr}
 	bx lr
