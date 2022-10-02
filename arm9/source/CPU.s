@@ -24,7 +24,7 @@
 #endif
 	.align 2
 ;@----------------------------------------------------------------------------
-run:		;@ Return after X frames
+run:						;@ Return after X frame(s)
 	.type   run STT_FUNC
 ;@----------------------------------------------------------------------------
 	ldrh r0,waitCountIn

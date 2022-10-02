@@ -71,6 +71,11 @@ void enterGUI() {
 void exitGUI() {
 }
 
+void autoLoadGame(void) {
+	ui9();
+	quickSelectGame();
+}
+
 void quickSelectGame(void) {
 	while (loadGame(selected)) {
 		ui10();
