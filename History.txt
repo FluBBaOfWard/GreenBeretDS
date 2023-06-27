@@ -2,8 +2,9 @@ GreenBeretDS revision history
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
-V0.6.2 - 2022-10-02 (FluBBa)
-	Cleaned up source.
+V0.6.2 - 2023-06-27 (FluBBa)
+	Added new debug menu.
+	Better menu traversing.
 
 V0.6.1 - 2021-07-06 (FluBBa)
 	Fixed reset for "Mr. Goemon".

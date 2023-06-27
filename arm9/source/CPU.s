@@ -1,10 +1,10 @@
 #ifdef __arm__
 
 #include "Shared/nds_asm.h"
-#include "ARMZ80/ARMZ80mac.h"
+#include "ARMZ80/ARMZ80.i"
 #include "K005849/K005849.i"
 
-#define CYCLE_PSL (198)
+#define CYCLE_PSL (H_PIXEL_COUNT/2)
 
 	.global run
 	.global stepFrame
@@ -53,8 +53,8 @@ runStart:
 
 	bl refreshEMUjoypads		;@ Z=1 if communication ok
 
-	ldr z80optbl,=Z80OpTable
-	add r0,z80optbl,#z80Regs
+	ldr z80ptr,=Z80OpTable
+	add r0,z80ptr,#z80Regs
 	ldmia r0,{z80f-z80pc,z80sp}	;@ Restore Z80 state
 
 ;@----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ konamiFrameLoop:
 	bne konamiFrameLoop
 ;@----------------------------------------------------------------------------
 
-	add r0,z80optbl,#z80Regs
+	add r0,z80ptr,#z80Regs
 	stmia r0,{z80f-z80pc,z80sp}	;@ Save Z80 state
 
 	ldr r1,=fpsValue
@@ -103,8 +103,8 @@ stepFrame:					;@ Return after 1 frame
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{r4-r11,lr}
 
-	ldr z80optbl,=Z80OpTable
-	add r0,z80optbl,#z80Regs
+	ldr z80ptr,=Z80OpTable
+	add r0,z80ptr,#z80Regs
 	ldmia r0,{z80f-z80pc,z80sp}	;@ Restore Z80 state
 ;@----------------------------------------------------------------------------
 konamiStepLoop:
@@ -117,7 +117,7 @@ konamiStepLoop:
 	cmp r0,#0
 	bne konamiStepLoop
 ;@----------------------------------------------------------------------------
-	add r0,z80optbl,#z80Regs
+	add r0,z80ptr,#z80Regs
 	stmia r0,{z80f-z80pc,z80sp}	;@ Save Z80 state
 
 	ldr r1,frameTotal
@@ -136,12 +136,12 @@ cpuReset:		;@ Called by loadCart/resetGame
 	str r0,cyclesPerScanline
 
 ;@--------------------------------------
-	ldr z80optbl,=Z80OpTable
+	ldr z80ptr,=Z80OpTable
 
 	adr r4,cpuMapData
 	bl mapZ80Memory
 
-	mov r0,z80optbl
+	mov r0,z80ptr
 	mov r1,#0
 	bl Z80Reset
 	ldmfd sp!,{lr}

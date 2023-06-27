@@ -1,11 +1,10 @@
 #ifdef __arm__
 
-#include "ARMZ80/ARMZ80mac.h"
 #include "K005849/K005849.i"
 
 	.global ioReset
-	.global IO_R
-	.global IO_W
+	.global GreenBeretIO_R
+	.global GreenBeretIO_W
 	.global Z80In
 	.global Z80Out
 	.global refreshEMUjoypads
@@ -18,6 +17,8 @@
 	.global gDipSwitch3
 	.global coinCounter0
 	.global coinCounter1
+
+	addy		.req r12		;@ Used by CPU cores
 
 	.syntax unified
 	.arm
@@ -133,7 +134,7 @@ Input5_R:
 	bx lr
 
 ;@----------------------------------------------------------------------------
-IO_R:			;@ I/O read  (0xE045-0xFFFF)
+GreenBeretIO_R:			;@ I/O read  (0xE045-0xFFFF)
 ;@----------------------------------------------------------------------------
 	cmp addy,#0xF200
 	beq Input4_R
@@ -152,7 +153,7 @@ IO_R:			;@ I/O read  (0xE045-0xFFFF)
 	.long Input2_R				;@ 0xF603
 
 ;@----------------------------------------------------------------------------
-IO_W:			;@I/O write  (0xE045-0xFFFF)
+GreenBeretIO_W:			;@I/O write  (0xE045-0xFFFF)
 ;@----------------------------------------------------------------------------
 	cmp addy,#0xF200
 	bxeq lr
@@ -180,14 +181,7 @@ coinW:
 	addne r1,r1,#1
 	strne r1,coinCounter1
 
-	and r0,r0,#0xE0
-	ldr r1,=romStart
-	ldr r1,[r1]
-	sub r1,r1,#0x3800
-	add r1,r1,r0,lsl#6
-	str r1,[z80optbl,#z80MemTbl+28]
-	bx lr
-
+	b gberetMapRom
 
 ;@----------------------------------------------------------------------------
 Z80In:

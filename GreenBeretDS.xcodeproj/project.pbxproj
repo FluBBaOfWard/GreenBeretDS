@@ -9,6 +9,7 @@
 /* Begin PBXFileReference section */
 		746D78E114ED9A8400CC738F /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; fileEncoding = 4; path = Makefile; sourceTree = "<group>"; };
 		9C1FFFA8269473A1005851ED /* EmuSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuSettings.h; sourceTree = "<group>"; };
+		9C23CA9D29E6C5F5007DD39E /* ArcadeRoms.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ArcadeRoms.c; sourceTree = "<group>"; };
 		9C29493C2604C4AB00EDA7C9 /* ARMZ80.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = ARMZ80.i; sourceTree = "<group>"; };
 		9C29493D2604C4AB00EDA7C9 /* ARMZ80.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMZ80.h; sourceTree = "<group>"; };
 		9C29493E2604C4AB00EDA7C9 /* ARMZ80mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMZ80mac.h; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 				9C35488424BCAB4300CCD030 /* AsmExtra.s */,
 				9C294951260F4CC800EDA7C9 /* EmubaseAC.h */,
 				9C294952260F4CC800EDA7C9 /* ArcadeRoms.h */,
+				9C23CA9D29E6C5F5007DD39E /* ArcadeRoms.c */,
 			);
 			path = Shared;
 			sourceTree = "<group>";

@@ -14,9 +14,9 @@
 	.global vromBase0
 	.global vromBase1
 	.global promBase
+	.global gberetMapRom
 
 	.global ROM_Space
-
 
 
 	.syntax unified
@@ -120,8 +120,8 @@ tbLoop2:
 	str r3,[r6,r0,lsl#2]		;@ WrMem
 
 	mov r0,#0xFF				;@ IO
-	ldr r2,=IO_R
-	ldr r3,=IO_W
+	ldr r2,=GreenBeretIO_R
+	ldr r3,=GreenBeretIO_W
 	str r2,[r5,r0,lsl#2]		;@ RdMem
 	str r3,[r6,r0,lsl#2]		;@ WrMem
 
@@ -153,9 +153,9 @@ z80Mapper:		;@ Rom paging..
 	cmp r1,#0xF8
 	movmi r5,#12
 
-	add r6,z80optbl,#z80ReadTbl
-	add r7,z80optbl,#z80WriteTbl
-	add r8,z80optbl,#z80MemTbl
+	add r6,z80ptr,#z80ReadTbl
+	add r7,z80ptr,#z80WriteTbl
+	add r8,z80ptr,#z80MemTbl
 	b z80MemAps
 z80MemApl:
 	add r6,r6,#4
@@ -180,6 +180,17 @@ z80Flush:		;@ Update cpu_pc & lastbank
 	ldmfd sp!,{r3-r8,lr}
 	bx lr
 
+
+;@----------------------------------------------------------------------------
+gberetMapRom:
+;@----------------------------------------------------------------------------
+	and r0,r0,#0xE0
+	ldr r1,=romStart
+	ldr r1,[r1]
+	sub r1,r1,#0x3800
+	add r1,r1,r0,lsl#6
+	str r1,[z80ptr,#z80MemTbl+28]
+	bx lr
 
 ;@----------------------------------------------------------------------------
 

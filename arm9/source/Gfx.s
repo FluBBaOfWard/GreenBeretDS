@@ -2,7 +2,6 @@
 
 #include "Shared/nds_asm.h"
 #include "Shared/EmuSettings.h"
-#include "ARMZ80/ARMZ80mac.h"
 #include "K005849/K005849.i"
 
 	.global gfxInit
@@ -25,6 +24,7 @@
 	.global k005849_0W
 	.global emuRAM
 
+	addy		.req r12		;@ Used by CPU cores
 
 	.syntax unified
 	.arm
@@ -70,6 +70,21 @@ gfxReset:					;@ Called with CPU reset
 	ldr r2,=Z80SetIRQPin		;@ 1/2 VBlank (Green Beret)
 	ldr r3,=emuRAM
 	bl k005849Reset0
+	mov r0,#CHIP_K005849
+	bl k005849SetType
+	bl bgInit
+
+	ldr r0,=gGammaValue
+	ldrb r0,[r0]
+	bl paletteInit				;@ Do palette mapping
+	bl paletteTxAll				;@ Transfer it
+
+	ldmfd sp!,{pc}
+
+;@----------------------------------------------------------------------------
+bgInit:					;@ BG tiles
+;@----------------------------------------------------------------------------
+	stmfd sp!,{lr}
 
 	ldr r0,=BG_GFX+0x8000		;@ r0 = NDS BG tileset
 	str r0,[koptr,#bgrGfxDest]
@@ -88,11 +103,6 @@ gfxReset:					;@ Called with CPU reset
 	sub r1,r0,#0x04000			;@ src
 	mov r2,#0x04000				;@ len
 	blx memcpy
-
-	ldr r0,=gGammaValue
-	ldrb r0,[r0]
-	bl paletteInit				;@ Do palette mapping
-	bl paletteTxAll				;@ Transfer it
 
 	ldmfd sp!,{pc}
 
@@ -280,10 +290,11 @@ endFrame:					;@ Called just before screen end (~line 240)	(r0-r2 safe to use)
 
 	ldr r0,=scrollTemp
 	bl copyScrollValues
+
 	mov r0,#BG_GFX
-	bl convertTileMap5849
+	bl convertTileMap
 	ldr r0,tmpOamBuffer
-	bl convertSprites5849
+	bl convertSprites
 ;@--------------------------
 
 	ldr r0,dmaOamBuffer
@@ -302,12 +313,10 @@ endFrame:					;@ Called just before screen end (~line 240)	(r0-r2 safe to use)
 	bx lr
 
 ;@----------------------------------------------------------------------------
-
 tmpOamBuffer:		.long OAM_BUFFER1
 dmaOamBuffer:		.long OAM_BUFFER2
 
 oamBufferReady:		.long 0
-
 ;@----------------------------------------------------------------------------
 k005849Reset0:			;@ r0=periodicIrqFunc, r1=frameIrqFunc, r2=frame2IrqFunc, r3=ram+LUTs
 ;@----------------------------------------------------------------------------
@@ -362,8 +371,6 @@ OAM_BUFFER1:
 	.space 0x400
 OAM_BUFFER2:
 	.space 0x400
-DMA0BUFF:
-	.space 0x200
 SCROLLBUFF:
 	.space 0x400*2				;@ Scrollbuffer.
 MAPPED_RGB:
