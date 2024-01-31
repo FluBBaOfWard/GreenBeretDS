@@ -25,7 +25,7 @@ soundInit:
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{lr}
 
-	ldr snptr,=SN76496_0
+//	ldr r0,=SN76496_0
 //	bl sn76496Init				;@ sound
 
 	ldmfd sp!,{lr}
@@ -36,7 +36,7 @@ soundReset:
 	.type soundReset STT_FUNC
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{lr}
-	ldr snptr,=SN76496_0
+	ldr r1,=SN76496_0
 	mov r0,#1
 	bl sn76496Reset				;@ sound
 	ldmfd sp!,{lr}
@@ -68,7 +68,7 @@ soundMixer:					;@ r0=length, r1=pointer
 
 	mov r0,r0,lsl#1
 	ldr r1,pcmPtr0
-	ldr snptr,=SN76496_0
+	ldr r2,=SN76496_0
 	bl sn76496Mixer
 
 	ldmfd sp,{r0,r1}
@@ -101,7 +101,7 @@ silenceLoop:
 SN_0_W:
 	.type SN_0_W STT_FUNC
 ;@----------------------------------------------------------------------------
-	ldr snptr,=SN76496_0
+	ldr r1,=SN76496_0
 	b sn76496W
 
 ;@----------------------------------------------------------------------------
