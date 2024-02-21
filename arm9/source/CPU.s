@@ -53,24 +53,8 @@ runStart:
 
 	bl refreshEMUjoypads		;@ Z=1 if communication ok
 
-	ldr z80ptr,=Z80OpTable
-	add r0,z80ptr,#z80Regs
-	ldmia r0,{z80f-z80pc,z80sp}	;@ Restore Z80 state
-
-;@----------------------------------------------------------------------------
-konamiFrameLoop:
-;@----------------------------------------------------------------------------
-//	ldr r0,cyclesPerScanline
-	mov r0,#CYCLE_PSL
-	bl Z80RunXCycles
-	ldr koptr,=k005849_0
-	bl doScanline
-	cmp r0,#0
-	bne konamiFrameLoop
-;@----------------------------------------------------------------------------
-
-	add r0,z80ptr,#z80Regs
-	stmia r0,{z80f-z80pc,z80sp}	;@ Save Z80 state
+	ldr r0,frameLoopPtr
+	blx r0
 
 	ldr r1,=fpsValue
 	ldr r0,[r1]
@@ -90,7 +74,8 @@ konamiFrameLoop:
 	b runStart
 
 ;@----------------------------------------------------------------------------
-cyclesPerScanline:	.long 0
+frameLoopPtr:			.long gbRunFrame
+z80CyclesPerScanline:	.long 0
 frameTotal:			.long 0		;@ Let Gui.c see frame count for savestates
 waitCountIn:		.byte 0
 waitMaskIn:			.byte 0
@@ -98,27 +83,33 @@ waitCountOut:		.byte 0
 waitMaskOut:		.byte 0
 
 ;@----------------------------------------------------------------------------
+gbRunFrame:					;@ GreenBeret/Goemon
+;@----------------------------------------------------------------------------
+	stmfd sp!,{lr}
+	ldr z80ptr,=Z80OpTable
+	add r0,z80ptr,#z80Regs
+	ldmia r0,{z80f-z80pc,z80sp}	;@ Restore Z80 state
+;@----------------------------------------------------------------------------
+gbFrameLoop:
+	ldr r0,z80CyclesPerScanline
+	bl Z80RunXCycles
+	ldr koptr,=k005849_0
+	bl doScanline
+	cmp r0,#0
+	bne gbFrameLoop
+;@----------------------------------------------------------------------------
+	add r0,z80ptr,#z80Regs
+	stmia r0,{z80f-z80pc,z80sp}	;@ Save Z80 state
+	ldmfd sp!,{pc}
+
+;@----------------------------------------------------------------------------
 stepFrame:					;@ Return after 1 frame
 	.type stepFrame STT_FUNC
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{r4-r11,lr}
 
-	ldr z80ptr,=Z80OpTable
-	add r0,z80ptr,#z80Regs
-	ldmia r0,{z80f-z80pc,z80sp}	;@ Restore Z80 state
-;@----------------------------------------------------------------------------
-konamiStepLoop:
-;@----------------------------------------------------------------------------
-//	ldr r0,cyclesPerScanline
-	mov r0,#CYCLE_PSL
-	bl Z80RunXCycles
-	ldr koptr,=k005849_0
-	bl doScanline
-	cmp r0,#0
-	bne konamiStepLoop
-;@----------------------------------------------------------------------------
-	add r0,z80ptr,#z80Regs
-	stmia r0,{z80f-z80pc,z80sp}	;@ Save Z80 state
+	ldr r0,frameLoopPtr
+	blx r0
 
 	ldr r1,frameTotal
 	add r1,r1,#1
@@ -133,7 +124,7 @@ cpuReset:		;@ Called by loadCart/resetGame
 
 ;@---Speed - 3.072MHz / 60Hz		;Green Beret, Goemon.
 	ldr r0,=CYCLE_PSL
-	str r0,cyclesPerScanline
+	str r0,z80CyclesPerScanline
 
 ;@--------------------------------------
 	ldr z80ptr,=Z80OpTable
@@ -159,7 +150,7 @@ cpuMapData:
 ;@	.byte 0x03,0x02,0x01,0x00,0xF9,0xF9,0xFF,0xFE			;@ Jail Break
 ;@----------------------------------------------------------------------------
 mapZ80Memory:
-	stmfd sp!,{lr}
+	stmfd sp!,{r5,lr}
 	mov r5,#0x80
 z80DataLoop:
 	mov r0,r5
@@ -167,7 +158,7 @@ z80DataLoop:
 	bl z80Mapper
 	movs r5,r5,lsr#1
 	bne z80DataLoop
-	ldmfd sp!,{pc}
+	ldmfd sp!,{r5,pc}
 ;@----------------------------------------------------------------------------
 	.end
 #endif // #ifdef __arm__

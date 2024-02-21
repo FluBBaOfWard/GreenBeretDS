@@ -11,6 +11,7 @@
 	.global romNum
 	.global cartFlags
 	.global romStart
+	.global mainCpu
 	.global vromBase0
 	.global vromBase1
 	.global promBase
@@ -76,14 +77,13 @@ loadCart: 		;@ Called from C:  r0=rom number, r1=emuflags
 //	ldr r7,=rawRom
 	ldr r7,=ROM_Space
 								;@ r7=rombase til end of loadcart so DON'T FUCK IT UP
-	cmp r0,#3
-	str r7,romStart				;@ Set rom base
-	add r0,r7,#0xC000			;@ 0xC000
-	addeq r0,r0,#0x4000			;@ Mr. Goemon
-	str r0,vromBase0			;@ Spr & bg
-	str r0,vromBase1			;@
-	add r0,r0,#0x14000
-	str r0,promBase				;@ Colour prom
+//	str r7,romStart				;@ Set rom base
+//	add r0,r7,#0xC000			;@ 0xC000
+//	addeq r0,r0,#0x4000			;@ Mr. Goemon
+//	str r0,vromBase0			;@ Spr & bg
+//	str r0,vromBase1			;@
+//	add r0,r0,#0x14000
+//	str r0,promBase				;@ Colour prom
 
 	ldr r4,=MEMMAPTBL_
 	ldr r5,=RDMEMTBL_
@@ -207,6 +207,7 @@ cartFlags:
 	.space 3
 
 romStart:
+mainCpu:
 	.long 0
 vromBase0:
 	.long 0

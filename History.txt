@@ -2,9 +2,10 @@ GreenBeretDS revision history
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
-V0.6.2 - 2023-06-27 (FluBBa)
+V0.6.2 - 2024-02-21 (FluBBa)
 	Added new debug menu.
 	Better menu traversing.
+	Better rom loading.
 
 V0.6.1 - 2021-07-06 (FluBBa)
 	Fixed reset for "Mr. Goemon".
