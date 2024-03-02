@@ -14,7 +14,7 @@
 #include "K005849/Version.h"
 #include "../arm7/source/SN76496/Version.h"
 
-#define EMUVERSION "V0.6.2 2024-02-21"
+#define EMUVERSION "V0.6.2 2024-03-02"
 
 static void uiDebug(void);
 
