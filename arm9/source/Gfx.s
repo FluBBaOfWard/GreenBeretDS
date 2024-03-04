@@ -22,7 +22,7 @@
 	.global k005849_0R
 	.global k005849Ram_0W
 	.global k005849_0W
-	.global emuRAM
+	.global GFX_RAM0
 
 	addy		.req r12		;@ Used by CPU cores
 
@@ -68,7 +68,7 @@ gfxReset:					;@ Called with CPU reset
 	ldr r0,=Z80SetNMIPin		;@ Scanline counter
 	ldr r1,=Z80SetIRQPin		;@ VBlank (Mr. Goemon)
 	ldr r2,=Z80SetIRQPin		;@ 1/2 VBlank (Green Beret)
-	ldr r3,=emuRAM
+	ldr r3,=GFX_RAM0
 	bl k005849Reset0
 	mov r0,#CHIP_K005849
 	bl k005849SetType
@@ -374,7 +374,7 @@ MAPPED_RGB:
 	.space 0x400
 EMUPALBUFF:
 	.space 0x400
-emuRAM:
+GFX_RAM0:
 	.space 0x2000
 	.space SPRBLOCKCOUNT*4
 	.space BGBLOCKCOUNT*4

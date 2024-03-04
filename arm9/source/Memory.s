@@ -8,6 +8,11 @@
 	.global empty_W
 	.global rom_W
 	.global memZ80R0
+	.global memZ80R1
+	.global memZ80R2
+	.global memZ80R3
+	.global memZ80R4
+	.global memZ80R5
 	.global memZ80R6
 	.global memZ80R7
 
