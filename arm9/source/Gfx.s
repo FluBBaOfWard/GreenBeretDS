@@ -4,21 +4,29 @@
 #include "Shared/EmuSettings.h"
 #include "K005849/K005849.i"
 
-	.global gfxInit
-	.global gfxReset
-	.global paletteInit
-	.global paletteTxAll
-	.global refreshGfx
-	.global endFrame
 	.global gfxState
 	.global gFlicker
 	.global gTwitch
 	.global gScaling
 	.global gGfxMask
-	.global vblIrqHandler
 	.global yStart
-
 	.global k005849_0
+
+	.global MAPPED_RGB
+	.global EMUPALBUFF
+
+	.global gfxInit
+	.global gfxReset
+	.global bgInit
+	.global paletteInit
+	.global paletteTxAll
+	.global paletteTx0
+	.global refreshGfx
+	.global endFrame
+	.global gammaConvert
+	.global vblIrqHandler
+
+	.global k005849Reset0
 	.global k005849_0R
 	.global k005849Ram_0W
 	.global k005849_0W
@@ -65,14 +73,7 @@ gfxReset:					;@ Called with CPU reset
 	mov r0,#0x0000
 	strh r0,[r1,#REG_WINOUT]
 
-	ldr r0,=Z80SetNMIPin		;@ Scanline counter
-	ldr r1,=Z80SetIRQPin		;@ VBlank (Mr. Goemon)
-	ldr r2,=Z80SetIRQPin		;@ 1/2 VBlank (Green Beret)
-	ldr r3,=GFX_RAM0
-	bl k005849Reset0
-	mov r0,#CHIP_K005849
-	bl k005849SetType
-	bl bgInit
+	bl gfxResetGreenBeret
 
 	ldr r0,=gGammaValue
 	ldrb r0,[r0]
@@ -111,38 +112,8 @@ paletteInit:		;@ r0-r3 modified.
 	.type paletteInit STT_FUNC
 ;@ Called by ui.c:  void paletteInit(u8 gammaVal);
 ;@----------------------------------------------------------------------------
-	stmfd sp!,{r4-r9,lr}
-	mov r1,r0					;@ Gamma value = 0 -> 4
-	ldr r8,=promBase			;@ Proms
-	ldr r8,[r8]
-	mov r7,#0xE0
-	ldr r6,=MAPPED_RGB
-	mov r4,#32					;@ Green Beret bgr, r1=R, r2=G, r3=B
-noMap:							;@ Map 00000000bbgggrrr  ->  0bbbbbgggggrrrrr
-	ldrb r9,[r8],#1
-	and r0,r9,#0xC0				;@ Blue ready
-	bl gPrefix
-	mov r5,r0
+	b paletteInitGreenBeret
 
-	and r0,r7,r9,lsl#2			;@ Green ready
-	bl gPrefix
-	orr r5,r0,r5,lsl#5
-
-	and r0,r7,r9,lsl#5			;@ Red ready
-	bl gPrefix
-	orr r5,r0,r5,lsl#5
-
-	strh r5,[r6],#2
-	subs r4,r4,#1
-	bne noMap
-
-	ldmfd sp!,{r4-r9,lr}
-	bx lr
-
-;@----------------------------------------------------------------------------
-gPrefix:
-	orr r0,r0,r0,lsr#3
-	orr r0,r0,r0,lsr#6
 ;@----------------------------------------------------------------------------
 gammaConvert:	;@ Takes value in r0(0-0xFF), gamma in r1(0-4),returns new value in r0=0x1F
 ;@----------------------------------------------------------------------------
@@ -160,19 +131,7 @@ gammaConvert:	;@ Takes value in r0(0-0xFF), gamma in r1(0-4),returns new value i
 paletteTxAll:				;@ Called from ui.c
 	.type paletteTxAll STT_FUNC
 ;@----------------------------------------------------------------------------
-	stmfd sp!,{lr}
-
-	ldr r1,=promBase			;@ Proms
-	ldr r1,[r1]
-	add r1,r1,#32				;@ LUT
-	ldr r2,=MAPPED_RGB
-	ldr r0,=EMUPALBUFF+0x200	;@ Sprites first
-	bl paletteTx0
-	add r2,r2,#0x20
-	ldr r0,=EMUPALBUFF
-	bl paletteTx0
-	ldmfd sp!,{lr}
-	bx lr
+	b paletteTxAllGreenBeret
 
 ;@----------------------------------------------------------------------------
 paletteTx0:					;@ r0=dst, r1=source, r2=Palette
@@ -315,15 +274,14 @@ dmaOamBuffer:		.long OAM_BUFFER2
 
 oamBufferReady:		.long 0
 ;@----------------------------------------------------------------------------
-k005849Reset0:			;@ r0=periodicIrqFunc, r1=frameIrqFunc, r2=frame2IrqFunc, r3=ram+LUTs
+k005849Reset0:			;@ r0=periodicIrqFunc, r1=frameIrqFunc, r2=frame2IrqFunc
 ;@----------------------------------------------------------------------------
+	ldr r3,=GFX_RAM0
 	adr koptr,k005849_0
 	b k005849Reset
 ;@----------------------------------------------------------------------------
 k005849_0R:					;@ I/O read, (0xE000-0xE044)
 ;@----------------------------------------------------------------------------
-	cmp addy,#0xF800
-	bpl memZ80R7
 	stmfd sp!,{addy,lr}
 	mov r1,addy
 	adr koptr,k005849_0

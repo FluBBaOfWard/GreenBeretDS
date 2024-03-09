@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include "GreenBeret.h"
+#include "Games/GreenBeret.h"
 
 #define FILEEXTENSIONS ".zip"
 

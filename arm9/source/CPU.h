@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+extern u32 frameTotal;
 extern u8 waitMaskIn;
 extern u8 waitMaskOut;
 

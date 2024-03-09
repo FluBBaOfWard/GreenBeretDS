@@ -20,7 +20,8 @@ SOURCES		:=	source	\
 				source/Shared \
 				source/Shared/Unzip \
 				source/ARMZ80 \
-				source/K005849
+				source/K005849 \
+				source/Games
 INCLUDES	:=	include ../include
 DATA		:=	data
 GRAPHICS	:=	graphics \

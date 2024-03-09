@@ -4,8 +4,6 @@
 #include "ARMZ80/ARMZ80mac.h"
 #include "K005849/K005849.i"
 
-	.global machineInit
-	.global loadCart
 	.global emuFlags
 	.global romNum
 	.global cartFlags
@@ -14,10 +12,12 @@
 	.global vromBase0
 	.global vromBase1
 	.global promBase
-	.global gberetMapRom
-
 	.global ROM_Space
+	.global emptySpace
 
+	.global machineInit
+	.global loadCart
+	.global doZ80MainCpuMapping
 
 	.syntax unified
 	.arm
@@ -92,32 +92,6 @@ loadCart: 		;@ Called from C:  r0=rom number, r1=emuflags
 	ldmfd sp!,{r4-r11,lr}
 	bx lr
 
-;@----------------------------------------------------------------------------
-gberetMapRom:
-;@----------------------------------------------------------------------------
-	and r0,r0,#0xE0
-	ldr r1,=romStart
-	ldr r1,[r1]
-	sub r1,r1,#0x3800
-	add r1,r1,r0,lsl#6
-	str r1,[z80ptr,#z80MemTbl+28]
-	bx lr
-
-;@----------------------------------------------------------------------------
-greenBeretMapping:						;@ Green Beret
-	.long 0x00, memZ80R0, rom_W									;@ ROM
-	.long 0x01, memZ80R1, rom_W									;@ ROM
-	.long 0x02, memZ80R2, rom_W									;@ ROM
-	.long 0x03, memZ80R3, rom_W									;@ ROM
-	.long 0x04, memZ80R4, rom_W									;@ ROM
-	.long 0x05, memZ80R5, rom_W									;@ ROM
-	.long GFX_RAM0, memZ80R6, k005849Ram_0W						;@ Graphic
-	.long emptySpace, GreenBeretIO_R, GreenBeretIO_W			;@ IO
-
-;@----------------------------------------------------------------------------
-doCpuMappingGreenBeret:
-;@----------------------------------------------------------------------------
-	adr r2,greenBeretMapping
 ;@----------------------------------------------------------------------------
 doZ80MainCpuMapping:
 ;@----------------------------------------------------------------------------

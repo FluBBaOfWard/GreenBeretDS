@@ -5,11 +5,16 @@
 extern "C" {
 #endif
 
-#include "Shared/ArcadeRoms.h"
+#include "../Shared/ArcadeRoms.h"
 
-#define GAME_COUNT (4)
+#define GB_GAME_COUNT (4)
 
-extern const ArcadeGame gberetGames[GAME_COUNT];
+extern const ArcadeRom gberetRoms[14];
+extern const ArcadeRom rushatckRoms[14];
+extern const ArcadeRom gberetbRoms[13];
+extern const ArcadeRom mrgoemonRoms[11];
+
+extern const ArcadeGame gberetGames[GB_GAME_COUNT];
 
 /// This runs all save state functions for each chip.
 int packState(void *statePtr);

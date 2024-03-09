@@ -6,13 +6,13 @@
 
 #define CYCLE_PSL (H_PIXEL_COUNT/2)
 
-	.global run
-	.global stepFrame
-	.global cpuReset
 	.global frameTotal
 	.global waitMaskIn
 	.global waitMaskOut
 
+	.global run
+	.global stepFrame
+	.global cpuReset
 
 	.syntax unified
 	.arm
@@ -122,7 +122,7 @@ cpuReset:		;@ Called by loadCart/resetGame
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{lr}
 
-;@---Speed - 3.072MHz / 60Hz		;Green Beret, Goemon.
+;@---Speed - 3.072MHz / 60Hz		;Green Beret, Mr.Goemon.
 	ldr r0,=CYCLE_PSL
 	str r0,z80CyclesPerScanline
 
