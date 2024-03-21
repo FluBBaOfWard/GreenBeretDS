@@ -2,7 +2,7 @@ GreenBeretDS revision history
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
-V0.6.2 - 2024-03-09 (FluBBa)
+V0.6.2 - 2024-03-21 (FluBBa)
 	Added new debug menu.
 	Better menu traversing.
 	Better rom loading.
